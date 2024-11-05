@@ -191,10 +191,10 @@ void ImuNode::publishMsg(
   _imu_msg.orientation_covariance[4] = 0.01;  // Pitch variance
   _imu_msg.orientation_covariance[8] = 0.01;  // Yaw variance
 
-  // Angular velocity covariance (assuming high confidence)
-  _imu_msg.angular_velocity_covariance[0] = 0.001;  // Angular velocity X variance
-  _imu_msg.angular_velocity_covariance[4] = 0.001;  // Angular velocity Y variance
-  _imu_msg.angular_velocity_covariance[8] = 0.001;  // Angular velocity Z variance
+  // Angular velocity covariance (assuming mid confidence)
+  _imu_msg.angular_velocity_covariance[0] = 0.01;  // Angular velocity X variance
+  _imu_msg.angular_velocity_covariance[4] = 0.01;  // Angular velocity Y variance
+  _imu_msg.angular_velocity_covariance[8] = 0.01;  // Angular velocity Z variance
 
   // Linear acceleration covariance (assuming moderate confidence)
   _imu_msg.linear_acceleration_covariance[0] = 0.1;  // Acceleration X variance
