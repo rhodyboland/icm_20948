@@ -168,16 +168,38 @@ void ImuNode::publishMsg(
   // Construct and publish the IMU message
   _imu_msg.header.stamp = this->get_clock()->now();
   _imu_msg.header.frame_id = _frame_id;
+
+  // Set linear acceleration
   _imu_msg.linear_acceleration.x = acceleration[0];
   _imu_msg.linear_acceleration.y = acceleration[1];
   _imu_msg.linear_acceleration.z = acceleration[2];
+
+  // Set angular velocity
   _imu_msg.angular_velocity.x = angular_velocity[0];
   _imu_msg.angular_velocity.y = angular_velocity[1];
   _imu_msg.angular_velocity.z = angular_velocity[2];
+
+  // Set orientation
   _imu_msg.orientation.x = quaternion[0];
   _imu_msg.orientation.y = quaternion[1];
   _imu_msg.orientation.z = quaternion[2];
   _imu_msg.orientation.w = quaternion[3];
+
+  // Set covariance matrices
+  // Orientation covariance (assuming moderate confidence)
+  _imu_msg.orientation_covariance[0] = 0.01;  // Roll variance
+  _imu_msg.orientation_covariance[4] = 0.01;  // Pitch variance
+  _imu_msg.orientation_covariance[8] = 0.01;  // Yaw variance
+
+  // Angular velocity covariance (assuming high confidence)
+  _imu_msg.angular_velocity_covariance[0] = 0.001;  // Angular velocity X variance
+  _imu_msg.angular_velocity_covariance[4] = 0.001;  // Angular velocity Y variance
+  _imu_msg.angular_velocity_covariance[8] = 0.001;  // Angular velocity Z variance
+
+  // Linear acceleration covariance (assuming moderate confidence)
+  _imu_msg.linear_acceleration_covariance[0] = 0.1;  // Acceleration X variance
+  _imu_msg.linear_acceleration_covariance[4] = 0.1;  // Acceleration Y variance
+  _imu_msg.linear_acceleration_covariance[8] = 0.1;  // Acceleration Z variance
 
   _imu_pub->publish(_imu_msg);
 }
